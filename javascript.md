@@ -12,10 +12,12 @@ on the frontend, mostly with JavaScript.
 We follow some very basic rules:
 
 * brackets always open on the same line (`if (...) {`)
+* and `else` too (`} else {`)
 * multiple assignments don't need a newline
 * between a statement and **anything else** we add a newline
 * always add a newline before a `return`, unless it's the only code in the block
 * function names should be camel-cased (`myFunction`)
+* objects intended as blueprints, or constructors, should be in upper-case (`var MyObject = function() {}; var myObject = new MyObject()`)
 * members follow the same convention (`a.propertyName`)
 * use JsHint as much as possible :)
 * avoid global, native variables as much as possible (such as `window`), use proxies instead
@@ -23,6 +25,9 @@ We follow some very basic rules:
 * no need to add a space betwee the `function` keyword and its arguments (`function(a, b)`)
 * add a space between function arguments and the opening bracket (`function() {`)
 * separate arguments with one space after the columns (`function(a, b, c)`)
+* wrap self calling functions in `()` (`(function() {}())`), and don't abuse them
+* do not add comments inside your code, that's what the doc is for
+* cleanup your `console.log`s before committing
 
 Example:
 
@@ -30,7 +35,7 @@ Example:
 /**
  * My JsDoc.
  */
-var a = {
+var A = {
   doSomething: function(hello, hella) {
     if (something === somethingElse) {
       return 1;
@@ -134,7 +139,8 @@ http.request = function(options) {
 ## Templates
 
 We prefer using jade as a templating engine, as it saves
-a lot of time during
+a lot of time during coding.
+Leverage on `includes` for repeted partials.
 
 ## Toolkit
 
@@ -156,10 +162,16 @@ complexity compared to Grunt, our old build tool.
 TBD
 
 ## Vanilla JS
-
-TBD
+* avoid `undefined` as much as possible
+* do not rely on truthy and falsy values: use `===` and `!==`
+* always define all the needed variables at the beginning of a function setting them to their itended type even if empty (`var list = []`, `var fooObj = {}`, `var fooString = ''`, etc)
+* always take care of undefined functions parameters setting a default or `null` value (`function (option) { options = options || null;}`)
+* forget about `while` statments...
+* Do not let a promisses siletly fail, always pass and error object to your rejections with a meaningful message (`q.reject(new Error('Bad things happened'))`)
 
 ## NodeJS
+
+##### Golden rule: never block!
 
 `require` statements should be on top of each file:
 
@@ -210,6 +222,12 @@ module.exports = service.
 This approach, by the way, lets you declare
 "protected" methods.
 
+Prefer recursion to `for` loops and `forEach`:
+* it will protect you from the dangers of async calls inside the for loops
+* `forEach` blocks and **we do not block!**
+
+Do not tinker with the base api's prototypes (ex: `Array.prototype.myFunction = function() {}`)
+Do use callbacks, but avoid nesting more then 3 of them. Keep it short.
 
 When loading files from the filesystem, be sure not to hardcode paths but use the safe `__dirname + path.join(...)` syntax so that the scripts can be launched from wherever directory
 
