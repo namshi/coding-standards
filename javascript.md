@@ -1,6 +1,7 @@
 # Coding standards for JavaScript
 
 > THIS DOCUMENT IS A DRAFT / PROPOSAL.
+
 > DO NOT CONSIDER IT ANYTHING OFFICIAL FOR NOW.
 
 This guide describes the set of rules we apply
