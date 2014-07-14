@@ -102,12 +102,69 @@ $foo              = true;
 $veryLongVariable = 1;
 ```
 
+### Array
+
+* Use the short syntax
+
+``` php
+
+$array = [1, 2, 'foo' => 'bar',]
+
+```
+
+* The last array argument should end with a comma
+
+* Long nested array MUST follow this format, indenting one tab:
+
+``` php
+
+$array = [
+	'first',
+	'second,
+	'third' => [
+		'nested',
+	],
+]
+
+```
+
+
 ## Logger
 
+We use `Monolo\Logger` in our codebase. It implements the [PSR-3 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
+Let's "code against interfaces", whenever we need the Logger, just declare the `LoggerInteface`
 
-should be
+``` php
+namespace Namshi\What\Ever;
 
-$logger->err('message',[
+use Psr\Log\LoggerInterface;
+
+public function foo($firstArgument, $secondArgument, LoggerInterface $logger) {
+
+}
+
+```
+
+The logger argument SHOULD BE always the last argument.
+
+When catching an exception and we use the `Logger`, we SHOULD always provide the complete exception message
+
+``` php
+
+try {
+	//doSomething()
+} catch(\Exception $e) {
+	$logger->log('message',
+		[
+			'exception'  => $e,
+			'otherStuff' => 'bla bla',
+		]
+	);
+
+}
+
+```
+
 
 ## Structure
 tests dirs structure?
