@@ -165,11 +165,6 @@ try {
 
 ```
 
-
-## Structure
-tests dirs structure?
-
-
 ## Naming
 
 ### Class
@@ -214,7 +209,6 @@ const PAYMENT_SUCCESSFUL    = 'Payment Successful';
 const PAYMENT_ON_HOLD       = 'Payment On Hold';
 const PAYMENT_FAILED        = 'Payment Failed';
 ```
-
 * **Do not** use constants for services defined in the container
 
 * Use constants for messages
@@ -247,4 +241,16 @@ namshi_rose.search.client:
 * Use a blank line between block definitions
 
 
+## Structure
 
+* Projects should contain generic files on their root, like the `.gitignore`, `composer.json`.
+
+* Dependencies should be installed in the `src/vendor` directory via composer
+
+* If there is a vagrant machine all the vagrant files should stay in the `vagrant` directory in the root project dir
+
+* Directories should always have a singular name
+
+## Test directory structure
+
+TBD
