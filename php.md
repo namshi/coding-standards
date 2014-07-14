@@ -220,27 +220,31 @@ const PAYMENT_FAILED        = 'Payment Failed';
 * Use constants for messages
 
 
-##configuration files
+## Yaml configuration files
 
-services name in .yml?
-no ' or "
+* Do not use single `'` or double quotes `"` for string if the string doesn't contain a special character (like `%`)
 
-empty line between blocks`
+* Prepend the service name with the **vendor** name and the **bundle name**
 
+``` yml
 
-## Methods
+namshi_rose.search.client:
+	class: Namshi\RoseBundle\Search\SolrSearch
+	arguments:
+	    searchClient  :  @solarium.client
+	    avilableFacets:  '%namshi_rose.available_facets%'
+	    shops         :  @shops
+	    locale        :  @namshi.locale
+	    availableSorts:  '%namshi_rose.solr_sort_options%'
+	    logger         : @logger.solr
 
-directory structures
+```
 
+* Align the values on the same level
 
-phpdoc
+* Use camelCase to define keys
 
-self or static?
-
-
-bounduaries
-
-composer fixed versions
+* Use a blank line between block definitions
 
 
 
