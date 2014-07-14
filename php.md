@@ -119,7 +119,9 @@ $array = [
 	'first',
 	'second',
 	'third' => [
-		'nested',
+		'nested' => [
+			'deepNested',
+		],
 	],
 ]
 
