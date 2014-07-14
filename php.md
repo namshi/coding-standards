@@ -174,18 +174,47 @@ tests dirs structure?
 
 ### Class
 
-* Avoid *List, *Mapping etc, use expressive names
+* Avoid *List, *Mapping, *Collection etc suffic, use expressive names
 
-* Even if it could be better from
+* Even if it could be better sometimes to avoid *Interface, *Handler, *Command etc suffix because the namespace is already
+providing that information, it could lead to a mess when you're using many class with the same name but different
+namespace, for example:
+
+``` php
+
+use Namshi\Inteface\Product as ProductInterface;
+use Namshi\Importer\Product as ProductImporter;
+use Namshi\Handler\Product as ProductHandler;
+use Namshi\Manager\Product as ProductManager;
+use Namshi\Model\Product;
+```
+
+better:
+
+``` php
+
+use Namshi\Inteface\ProductInterface;
+use Namshi\Importer\ProductImporter;
+use Namshi\Handler\ProductHandler;
+use Namshi\Manager\ProductManager;
+use Namshi\Model\Product;
+```
 
 
-### constants
+### Constants
 
-how to build a constant name, think about namespace!
+* When you create constants name, think about namespaces:
+
+``` php
+
+const 
 
 
-do not use constants for services
-use constants for error messages
+```
+
+* **Do not** use constants for services defined in the container
+
+* Use constants for messages
 
 
 ##configuration files
