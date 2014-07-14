@@ -207,9 +207,12 @@ use Namshi\Model\Product;
 
 ``` php
 
-const 
+const MESSAGE_STATUS_SENT     = 'message sent';
+const MESSAGE_STATUS_REJECTED = 'message rejected';
 
-
+const PAYMENT_SUCCESSFUL    = 'Payment Successful';
+const PAYMENT_ON_HOLD       = 'Payment On Hold';
+const PAYMENT_FAILED        = 'Payment Failed';
 ```
 
 * **Do not** use constants for services defined in the container
