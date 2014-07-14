@@ -94,7 +94,6 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 * Variables names MUST be declared in [`camelCase`](http://en.wikipedia.org/wiki/CamelCase)
 
 * Variables declared on multiple lines MUST be aligned based on the longer variable name
-
 ``` php
 
 $bar              = 'bar';
@@ -105,7 +104,6 @@ $veryLongVariable = 1;
 ### Array
 
 * Use the short syntax
-
 ``` php
 
 $array = [1, 2, 'foo' => 'bar',]
@@ -115,12 +113,11 @@ $array = [1, 2, 'foo' => 'bar',]
 * The last array argument should end with a comma
 
 * Long nested array MUST follow this format, indenting one tab:
-
 ``` php
 
 $array = [
 	'first',
-	'second,
+	'second',
 	'third' => [
 		'nested',
 	],
@@ -139,7 +136,8 @@ namespace Namshi\What\Ever;
 
 use Psr\Log\LoggerInterface;
 
-public function foo($firstArgument, $secondArgument, LoggerInterface $logger) {
+public function foo($firstArgument, $secondArgument, LoggerInterface $logger)
+{
 
 }
 
