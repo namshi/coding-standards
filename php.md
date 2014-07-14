@@ -251,6 +251,6 @@ namshi_rose.search.client:
 
 * Directories should always have a singular name
 
-## Test directory structure
+### Test directory structure
 
 TBD
