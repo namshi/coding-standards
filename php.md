@@ -138,4 +138,10 @@ Recommendations
   PHPStorm - that way you will get good static analysis tool which will help you in finding some bugs and will prevent
   introducing the new ones
 
+- Create two projects in your IDE - one for cerberus only and one for the whole soa. This way it'll be a lot easier to work
+  with cerberus, also I would suggest excluding `app/cache` and `app/logs` directories if you're using PHPStorm and to remove the
+  bootstrap file. Caches and logs are excluded so that IDE won't need to reindex this stuff when something changes there (and
+  it happens a lot), and without bootstrap file you'll find that it's easier to debug some Symfony files - because in case of
+  bootstrap you'll see a mess of combined classes in one file
+
 - Love PHPStorm. And - first follow logic, and only then - standards and recommendations
