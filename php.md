@@ -59,6 +59,54 @@ ________
 
 - ClassName::class SHOULD be used to get FQCN of the ClassName instead of string literal (`'Namespace\ClassName'`)
 
+- Getters or setters SHOULD NOT unless you have a real reason to use it: hiding some functionality (f.e. lazy getter), hiding
+  real fields of the class, or public interfaces for classes, or there's a possibility of adding logic to them in derivative
+  classes. In most other cases it's usually redundant to have these methods:
+
+  ``` php
+  class SomeServiceClass
+  {
+
+      protected $serviceDependency;
+
+      public function __construct($serviceDependency)
+      {
+          // Your service is immutable and locked on its dependency, that's why
+          // you don't need a setter - constructor is the only place where you
+          // need to set it.
+          // Getter is not needed unless you have a reason to have it: for example
+          // to expose it to as a public method (which falls under public interfaces category)
+          $this->serviceDependency = $serviceDependency;
+      }
+
+  }
+
+  class SomeDataObject
+  {
+
+      protected $dataField;
+
+      public function __construct($dataField)
+      {
+          $this->dataField = $dataField;
+      }
+
+      public function getDataField()
+      {
+          return $this->dataField;
+      }
+
+      // You probably don't need setter, if this data should be locked down
+      // in this object and never changed [from outside] - f.e. SalesOrder::$orderNr
+      // And there's cases when you actually need it - f.e. SalesOrder::$shippingMethod
+      [public function setDataField($dataField)
+      {
+          $this->dataField = $dataField;
+      }]
+
+  }
+  ```
+
 
 Recommendations
 ---------------
