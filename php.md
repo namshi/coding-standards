@@ -109,12 +109,71 @@ ________
 
 - There MUST NOT be redundant comments in code: class name before class definition, @package annotations, etc.
 
+- Protected methods MUST be go after public methods. Private methods MUST go after protected methods. The same applies to
+  properties. Constructor, if presented, MUST be the first method of the class
+
+- Relations in Doctrine entities MUST go after regular (scalar type) columns
+
 
 Recommendations
 ---------------
 
 - Avoid usage of highly-dynamic code, it has such downsides as: it's difficult to understand, it's difficult to debug,
   it's difficult to refactor involved code, and it's very error prone (TODO add an example)
+  ``` php
+
+  // This class is gonna be very hard to refactor or change any logic, because it's hard to find all the codepaths
+  class WrongStrategyImplementation extends ClassWithAnotherDozenOfDoSomethingMethods
+  {
+
+      public function doSomethingBasedOnTheArgument($argument)
+      {
+          $methodName = "do$argument";
+
+          if (method_exists($this, $methodName)) {
+              return $this->$methodName();
+          }
+      }
+
+      protected function doThis() { }
+
+      protected function doThat() { }
+
+  }
+
+  // This strategy implementation is gonna be a lot easier to refactor because you just need to find all the
+  // implementors of a given interface
+  interface Strategy
+  {
+
+      public function doSomething();
+
+  }
+
+  class StrategyImplementor implements Strategy { ... }
+
+  class StrategyExecutor
+  {
+
+      /**
+       * @var Strategy[]
+       */
+      protected $strategies;
+
+      public function __constructor(array $strategies)
+      {
+          $this->strategies = $strategies;
+      }
+
+      public function executeStrategy($argument)
+      {
+          // plus some sane checks
+          return $this->strategies[$argument]->doSomething();
+      }
+
+  }
+
+  ```
 
 - Use string interpolation instead of concatenation. Don't worry about performance, it's almost the same while interpolation
   is much more readable
