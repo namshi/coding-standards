@@ -107,6 +107,8 @@ ________
   }
   ```
 
+- There MUST NOT be redundant comments in code: class name before class definition, @package annotations, etc.
+
 
 Recommendations
 ---------------
