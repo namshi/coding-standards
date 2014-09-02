@@ -251,6 +251,34 @@ namshi_rose.search.client:
 
 * Directories should always have a singular name
 
+
+## Random
+
+### Building string, interpolation vs concatenation vs sprintf
+
+Let's use sprintf if the string contains a variable that is an output of a funtion/method:
+
+```php
+
+$logger->log(sprintf('Total available stock per %s item is: %d', $item->getSKU(), $stock->getTotalQuantityFor($item));
+
+```
+
+If it's a simple variable let's use string interpolation for simplicity
+
+```php
+
+$logger->log("Total available stock per $sku is: $skuTotalStock");
+
+```
+
+or
+
+```php
+$logger->log("Total available stock per {$skus['GE12121212']} is: $skuTotalStock");
+```
+
+
 ### Test directory structure
 
 (**TBD**)
