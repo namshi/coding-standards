@@ -287,3 +287,20 @@ $logger->log("Total available stock per {$skus['GE12121212']} is: $skuTotalStock
 ## TBD
 
 when to put phpdoc and when not?
+
+### Getter and Setter
+
+Let's start using getter and setter just when we need them, **when we really need to expose attributes and when
+we don't have any logic that manipulates the attributes**.
+Having getter and setter everywhere is like having public properties everywhere, breaking encapsulation.
+I would like to enforce the concept of "unbreakable domain" and IMH the proper usage of getter and setters is part of it.
+There is no need to call a setter in the constructor.
+If we need to put any logic in a getter or setter my suggestion is to create a specific method for that and the getter will just forward the call
+or we don't expose the getter at all.
+Two benefits come to my mind with this approach:
+- stronger domain
+- better readability and less code -> simplicity
+
+
+
+
