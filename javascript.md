@@ -22,20 +22,35 @@ We follow some very basic rules:
 * use JsHint as much as possible :)
 * avoid global, native variables as much as possible (such as `window`), use proxies instead
 * use 2 spaces to indent
-* no need to add a space betwee the `function` keyword and its arguments (`function(a, b)`)
+* no need to add a space between the `function` keyword and its arguments (`function(a, b)`)
 * add a space between function arguments and the opening bracket (`function() {`)
 * separate arguments with one space after the columns (`function(a, b, c)`)
-* wrap self calling functions in `()` (`(function() {}())`), and don't abuse them
-* do not add comments inside your code, that's what the doc is for
+* wrap self calling functions in `()` (`(function() {}())`), and don't abuse them (they can be confusing)
+* do not add comments inside your code, that's what the jsdoc is for
 * cleanup your `console.log`s before committing
 
 Example:
 
 ``` javascript
 /**
+* My Object Definition
+*/
+
+var MyObject = function() {
+  this.property = 'value';
+}
+
+MyObject.prototype.method = function() {
+  console.log('Hello, I'm a method');
+}
+
+var myObject = new MyObject();
+myObject.method();
+
+/**
  * My JsDoc.
  */
-var A = {
+var foo = {
   doSomething: function(hello, hella) {
     if (something === somethingElse) {
       return 1;
@@ -46,6 +61,7 @@ var A = {
     return 2;
   }
 };
+
 ```
 
 ## Structure
@@ -92,7 +108,7 @@ var helpers = {
 Avoid aliasing objects with a `self` variable, as
 then it could lead to scope issues; prefer aliasing them
 with the service "name" instead.
-
+myObjectInstance
 ``` javascript
 /**
  * User service.
@@ -162,16 +178,18 @@ complexity compared to Grunt, our old build tool.
 TBD
 
 ## Vanilla JS
-* avoid `undefined` as much as possible
+* avoid `undefined` as much as possible (have a look [here](http://shapeshed.com/the-void-of-undefined-in-javascript/) if you wonder how it might hurt you :))
 * do not rely on truthy and falsy values: use `===` and `!==`
 * always define all the needed variables at the beginning of a function setting them to their itended type even if empty (`var list = []`, `var fooObj = {}`, `var fooString = ''`, etc)
 * always take care of undefined functions parameters setting a default or `null` value (`function (option) { options = options || null;}`)
 * forget about `while` statments...
-* Do not let a promisses siletly fail, always pass and error object to your rejections with a meaningful message (`q.reject(new Error('Bad things happened'))`)
+* Do not let a promisses silently fail, always pass and error object to your rejections with a meaningful message (`q.reject(new Error('Bad things happened'))`)
 
 ## NodeJS
 
 ##### Golden rule: never block!
+##### 2nd Golden rule: never block, even if you don't expect to block!
+* Beware, you don't block only with cycles: heavily CPU bound operation will make the main thread sit there and wait until is completed. Cloning a big object, or parsing a big JSON (`JSON.parse()`) will block you like crazy!
 
 `require` statements should be on top of each file:
 
