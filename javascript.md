@@ -211,19 +211,51 @@ This approach, by the way, lets you declare
 "protected" methods.
 
 
+When loading files from the filesystem, be sure not to hardcode paths but use the safe `__dirname + path.join(...)` syntax so that the scripts can be launched from wherever directory
 
+Example: (assuming the following dir structure)
+```
+/appDir/
+      |/src/
+          |/config/
+          |app.js
+          |config.js
+```
 
+and `config.js` (required by `app.js`) taking care of loading files from the `/appDir/src/config/` directory
+```javascript
+/*config.js*/
 
+/**
+not sure what happens if I run app.js form diff paths if I:
+*/
+var filePath = './config/' + filename + '.yml');
+/* or */
+var filePath = '../src/config/' + filename + '.yml');
 
+/**
+this will nicely take care of paths
+*/
+var filePath = path.join(__dirname, './config/' + filename + '.yml');
+```
 
+also a little preventive debug output might help out sys admins track eventual problems:
+```javascript
+console.log('Loading config file: ', filePath);
+```
 
+as well as give a hint to your fellow devs if you really need a config file that needs to be created (or user [reconfig](https://github.com/namshi/reconfig)):
 
-
-
-
-
-
-
-
-
-
+Example: (assuming we need a `config/dev.yml` file)
+```javascript
+try {
+  /* your file opening stuff */
+} catch(error){
+  if (e.path.match(/dev.yml/g).length > 0 ) {
+    console.log('!!!NO dev.yml FOUND!!! Please copy dev.example.yml to dev.yml in your config directory!');
+  } else {
+    console.log('Error loading yaml config: ', e);
+    process.exit(1);
+  }
+}
+```
