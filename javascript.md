@@ -175,7 +175,17 @@ complexity compared to Grunt, our old build tool.
 
 ## Tests
 
-TBD
+#### NodeJS
+
+* We use [mocha](http://visionmedia.github.io/mocha/) as a test suite for node
+* When test are available add a convenient test command in the `script` section of your `package.json`
+* Use the `-b` option so the tests stop running at the 1st failure (it's easier to fix problems when you don't have a huge list of them)
+
+```javascript
+"scripts": {
+   "test": "mocha -b"
+  },
+```
 
 ## Vanilla JS
 * avoid `undefined` as much as possible (have a look [here](http://shapeshed.com/the-void-of-undefined-in-javascript/) if you wonder how it might hurt you :))
