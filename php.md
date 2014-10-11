@@ -1,12 +1,6 @@
-# Coding standards for PHP
+# PHP coding standards @Namshi 
 
-> THIS DOCUMENT IS A DRAFT / PROPOSAL.
-
-> DO NOT CONSIDER IT ANYTHING OFFICIAL FOR NOW.
-
-This guide describes the set of rules we apply
-on the api, mostly with PHP.
-
+This guide describes the set of rules we apply at Namshi in our PHP codebase.
 
 ## Formatting
 
@@ -34,6 +28,29 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 
 * Exclamation mark in (negating operator) MUST be prepended and followed with one whitespace
 
+
+## Structure
+* Add a single space after each comma delimiter;
+
+* Add a single space around operators (==, &&, ...);
+
+* Add a comma after each array item in a multi-line array, even after the last one;
+
+* Add a blank line before return statements, unless the return is alone inside a statement-group (like an if statement);
+
+* Use braces to indicate control structure body regardless of the number of statements it contains;
+
+* Define one class per file - this does not apply to private helper classes that are not intended to be instantiated from the outside and thus are not concerned by the PSR-0 standard;
+
+* Declare class properties before methods;
+
+* Declare public methods first, then protected ones and finally private ones. The exceptions to this rule are the class constructor and the setUp and tearDown methods of PHPUnit tests, which should always be the first methods to increase readability;
+
+* Use parentheses when instantiating classes regardless of the number of arguments the constructor has;
+
+* Exception message strings SHOULD be concatenated using sprintf.
+
+
 ## Class
 
 * Class names MUST be declared in [`StudlyCaps`](http://en.wikipedia.org/wiki/Studly_caps)
@@ -41,7 +58,6 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 * Class constants MUST be declared in all upper case with underscore separators
 
 * Opening braces for classes MUST go on the next line, and closing braces MUST go on the next line after the body.
-
 
 ### Namespace
 
@@ -66,7 +82,7 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 
 * Visibility MUST be declared on all methods.
 
-* Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility.
+* Method names MUST NOT be prefixed with a single underscore to indicate protected or private visibility.
 
 * Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis.
 
@@ -89,21 +105,25 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 			->commit();
     ```
 
-### Variables
+## Variables
 
 * Variables names MUST be declared in [`camelCase`](http://en.wikipedia.org/wiki/CamelCase)
 
-* Variables declared on multiple lines MUST be aligned based on the longer variable name
+* Variables declared on multiple lines MUST be aligned based on the longer variable name, that assignments MUST NOT be aligned together 
+if they have a blank line in between
 ``` php
 
 $bar              = 'bar';
 $foo              = true;
 $veryLongVariable = 1;
+
+$veryLongVariableNames1 = 50;
+$veryLongVariableNames2 = 100;
 ```
 
-### Array
+## Array
 
-* Use the short syntax
+* Arrays SHOULD be declared with short PHP syntax.
 ``` php
 
 $array = [1, 2, 'foo' => 'bar',]
@@ -131,7 +151,7 @@ $array = [
 ## Logger
 
 We use `Monolo\Logger` in our codebase. It implements the [PSR-3 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
-Let's "code against interfaces", whenever we need the Logger, just declare the `LoggerInteface`
+Let's "code against interfaces", whenever we need the Logger, just pass the `LoggerInteface`
 
 ``` php
 namespace Namshi\What\Ever;
@@ -145,7 +165,7 @@ public function foo($firstArgument, $secondArgument, LoggerInterface $logger)
 
 ```
 
-The logger argument SHOULD BE always the last argument.
+The logger argument SHOULD BE always the last argument, preceding the first optional argument
 
 When catching an exception and we use the `Logger`, we SHOULD always provide the complete exception message (**TBD**)
 
@@ -169,9 +189,17 @@ try {
 
 ### Class
 
-* Avoid *List, *Mapping, *Collection etc suffic, use expressive names
+* Prefix abstract classes with Abstract. Please note some early Symfony classes do not follow this convention and have not been renamed for backward compatibility reasons. However all new abstract classes must follow this naming convention;
 
-* Even if it could be better sometimes to avoid *Interface, *Handler, *Command etc suffix because the namespace is already
+* Suffix interfaces with Interface;
+
+* Suffix traits with Trait;
+
+* Suffix exceptions with Exception;
+
+* Avoid *List, *Mapping, *Collection etc suffix, use expressive names
+
+Even if it could be better sometimes to avoid *Interface, *Handler, *Command etc suffix because the namespace is already
 providing that information, it could lead to a mess when you're using many class with the same name but different
 namespace, for example:
 
@@ -196,7 +224,7 @@ use Namshi\Model\Product;
 ```
 
 
-### Constants
+## Constants
 
 * When you create constants name, think about namespaces:
 
@@ -213,6 +241,15 @@ const PAYMENT_FAILED        = 'Payment Failed';
 
 * Use constants for messages
 
+## Services
+
+From the [Symfony coding standards:](http://symfony.com/doc/current/contributing/code/standards.html#service-naming-conventions):
+
+* A service name contains groups, separated by dots;
+* The DI alias of the bundle is the first group (e.g. fos_user);
+* Use lowercase letters for service and parameter names;
+* A group name uses the underscore notation;
+* Each service has a corresponding parameter containing the class name
 
 ## Yaml configuration files
 
@@ -241,7 +278,7 @@ namshi_rose.search.client:
 * Use a blank line between block definitions
 
 
-## Structure
+## Project Structure
 
 * Projects should contain generic files on their root, like the `.gitignore`, `composer.json`.
 
@@ -256,7 +293,7 @@ namshi_rose.search.client:
 
 ### Building string, interpolation vs concatenation vs sprintf
 
-Let's use sprintf if the string contains a variable that is an output of a funtion/method:
+Let's use sprintf if the string contains a variable that is an output of a function or method:
 
 ```php
 
@@ -278,26 +315,27 @@ or
 $logger->log("Total available stock per {$skus['GE12121212']} is: $skuTotalStock");
 ```
 
+## PHPDOC
+* All public methods should have a PHP Doc
 
-### Test directory structure
+* All classes should have a short description.
 
-(**TBD**)
+* The @package and @subpackage annotations are not used.
 
+* For type-hinting in PHPDocs and casting, use bool (instead of boolean or Boolean), int (instead of integer), float (instead of double or real);
 
-## TBD
+## Getter and Setter
 
-when to put phpdoc and when not?
-
-### Getter and Setter
-
-Let's start using getter and setter just when we need them, **when we really need to expose attributes and when
+Use getter and setter just when we need them, **when we really need to expose attributes and when
 we don't have any logic that manipulates the attributes**.
 Having getter and setter everywhere is like having public properties everywhere, breaking encapsulation.
-I would like to enforce the concept of "unbreakable domain" and IMH the proper usage of getter and setters is part of it.
+I would like to enforce the concept of "unbreakable domain" and the proper usage of getter and setters is part of it.
 There is no need to call a setter in the constructor.
-If we need to put any logic in a getter or setter my suggestion is to create a specific method for that and the getter will just forward the call
+If we need to put any logic in a getter or setter, a specific method should be created for that; the getter will then just forward the call
 or we don't expose the getter at all.
-Two benefits come to my mind with this approach:
+
+A method SHOULD NOT start with `get` ot `set` if it's not related to a class attribute (e.g. use fetch, retrieve, load etc)
+Two benefits major benfits with this approach:
 - stronger domain
 - better readability and less code -> simplicity
 
