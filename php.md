@@ -92,17 +92,17 @@ We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/b
 
 * Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.
 
-* Chain calls on newline (`->`) SHOULD be aligned at least with one tabulation after the current indentation level or in the most
-    readable way: (**TBD**)
+* Chain calls on newline (`->`) SHOULD be aligned at least at the same level or in the most readable way:
 
     ``` php
-    $someLongVarName = $object->longMethodNameWithSomeArguments($argumentOne, $argumentTwo, $argumentThree)->fooMethod($fooArgument)
-        ->barMethod($barArgument);
+    $someLongVarName = $object->longMethodNameWithSomeArguments($argumentOne, $argumentTwo, $argumentThree)
+                              ->fooMethod($fooArgument)
+                              ->barMethod($barArgument);
 
     $result = $connection->beginTransaction()
-      ->query("SELECT * FROM foo_table LOCK")
-			->query("UPDATE foo_table SET bla=bla")
-			->commit();
+                            ->query("SELECT * FROM foo_table LOCK")
+			                ->query("UPDATE foo_table SET bla=bla")
+			             ->commit();
     ```
 
 ## Variables
@@ -132,7 +132,7 @@ $array = [1, 2, 'foo' => 'bar',]
 
 * The last array argument should end with a comma
 
-* Long nested array MUST follow this format, indenting one tab: (**TBD**)
+* Long nested array MUST follow this format, indenting one tab:
 ``` php
 
 $array = [
@@ -151,7 +151,7 @@ $array = [
 ## Logger
 
 We use `Monolo\Logger` in our codebase. It implements the [PSR-3 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md).
-Let's "code against interfaces", whenever we need the Logger, just pass the `LoggerInteface`
+Let's program to an interface, whenever we need the Logger, just pass the `LoggerInteface`
 
 ``` php
 namespace Namshi\What\Ever;
@@ -165,9 +165,9 @@ public function foo($firstArgument, $secondArgument, LoggerInterface $logger)
 
 ```
 
-The logger argument SHOULD BE always the last argument, preceding the first optional argument
+The logger argument MUST BE the last argument, preceding the first optional argument
 
-When catching an exception and we use the `Logger`, we SHOULD always provide the complete exception message (**TBD**)
+When catching an exception and we use the `Logger`, we MUST provide the complete exception message 
 
 ``` php
 
@@ -338,7 +338,3 @@ A method SHOULD NOT start with `get` ot `set` if it's not related to a class att
 Two benefits major benfits with this approach:
 - stronger domain
 - better readability and less code -> simplicity
-
-
-
-

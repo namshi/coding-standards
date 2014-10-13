@@ -5,3 +5,4 @@ writing code and, more importantly, design software
 at Namshi.
 
 * [JavaScript](https://github.com/namshi/coding-standards/blob/master/javascript.md)
+* [PHP](https://github.com/namshi/coding-standards/blob/master/php.md)
