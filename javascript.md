@@ -57,7 +57,7 @@ var foo = {
     } else if (iFellLucky) {
       explode(hello, hella);
     }
-    
+
     return 2;
   }
 };
@@ -228,7 +228,7 @@ var log = function(what){
 
 service.doSomething = function() {
   log('doing something');
-  
+
   // ...
 };
 
@@ -240,7 +240,7 @@ service.doSomethingElse = function() {
 
 service.doSomethingFunky = function() {
   log('doing something funky');
-  
+
   // ...
 };
 
@@ -290,7 +290,7 @@ also a little preventive debug output might help out sys admins track eventual p
 console.log('Loading config file: ', filePath);
 ```
 
-as well as give a hint to your fellow devs if you really need a config file that needs to be created (or user [reconfig](https://github.com/namshi/reconfig)):
+as well as give a hint to your fellow devs if you really need a config file that needs to be created (or user [file-ensure](https://github.com/namshi/node-file-ensure)):
 
 Example: (assuming we need a `config/dev.yml` file)
 ```javascript
