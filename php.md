@@ -92,6 +92,8 @@ public function loadAvailableItems()
 
 * Use parentheses when instantiating classes regardless of the number of arguments the constructor has;
 
+* Custom exception SHOULD NOT BE created if the purpose can be fulfilled by already available exceptions. (for reference: list of [Symfony Exceptions](http://www.forouzani.com/list-of-all-symfony2-exceptions-symfony.html))
+
 * Exception message strings SHOULD BE concatenated using sprintf.
 
 ```php
