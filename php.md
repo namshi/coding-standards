@@ -439,7 +439,9 @@ There is no need to call a setter in the constructor.
 If we need to put any logic in a getter or setter, a specific method should be created for that; the getter will then just forward the call
 or we don't expose the getter at all.
 
-A method SHOULD NOT start with `get` ot `set` if it's not related to a class attribute (e.g. use fetch, retrieve, load etc)
-Two benefits major benfits with this approach:
+* A method SHOULD NOT start with get or set if it's not related to a class attribute or a service (e.g. getDoctrine, getLogger).
+* Use the load or a find prefix (if it's a collection/repository method call) (e.g. loadSalesOrder, findCustomerByName )
+
+Two major benefits with this approach:
 - stronger domain
 - better readability and less code -> simplicity
