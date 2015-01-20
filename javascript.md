@@ -41,7 +41,7 @@ var MyObject = function() {
 }
 
 MyObject.prototype.method = function() {
-  console.log('Hello, I'm a method');
+  console.log('Hello, I\'m a method');
 }
 
 var myObject = new MyObject();
