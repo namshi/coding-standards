@@ -173,6 +173,9 @@ For building projects and running development environment you
 should use [Gulp](http://gulpjs.com/), which offers much less
 complexity compared to Grunt, our old build tool.
 
+Use [jshint](http://jshint.com) and [jscs](http://jscs.info) for coding standards enforcement,
+you can find our standard .jshintrc and .jscsrc files in the `jsSupportFiles` directory under this repo.
+
 ## Tests
 
 #### NodeJS
@@ -194,6 +197,7 @@ complexity compared to Grunt, our old build tool.
 * always take care of undefined functions parameters setting a default or `null` value (`function (option) { options = options || null;}`)
 * forget about `while` statments...
 * Do not let a promisses silently fail, always pass and error object to your rejections with a meaningful message (`q.reject(new Error('Bad things happened'))`)
+* if your function or method has more than 3 parameters, you might consider the use of an `options` object
 
 ## NodeJS
 
