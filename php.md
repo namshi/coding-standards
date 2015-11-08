@@ -4,254 +4,34 @@ This guide describes the set of rules we apply at Namshi in our PHP codebase.
 
 ## Formatting
 
-We mostly follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
-
-* Files MUST use only <?php tag at the beginning, no ?> at the end
-
-* Control structure keywords MUST have one space after them; method and function calls MUST NOT.
-
-```php
-if ($item->available()) {
-    //whatever
-}
-
-foreach ($array as $key => $value) {
-    //whatever
-}
-
-```
-
-* Opening braces for control structures MUST go on the same line, and closing braces MUST go on the next line after the body.
-
-* Opening parentheses for control structures MUST NOT have a space after them, and closing parentheses for control structures MUST NOT have a space before.
-
-* Lines SHOULD NOT be longer than 120 characters; lines longer than that SHOULD be split into multiple subsequent lines of no more than 120 characters each.
-
-* There MUST NOT be trailing whitespace at the end of non-blank lines.
-
-* Blank lines MAY be added to improve readability and to indicate related blocks of code.
-
-* There MUST NOT be more than one statement per line.
-
-* Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting
-
-* PHP keywords MUST be in lower case. The PHP constants true, false, and null MUST be in lower case.
-
-* Exclamation mark in (negating operator) MUST be prepended and followed with one whitespace
-```php
-
-if ( ! $item->available()) {
-    //whatever
-}
-```
-
-## Structure
-* Add a single space after each comma delimiter;
-
-* Add a single space around operators (==, &&, ...);
-
-```php
-
-if ($item->isAvailable && $item->isAwesome()) {
-    //whatever
-}
-
-```
-
-* Add a comma after each array item in a multi-line array, even after the last one;
-
-```php
-
-$array = ['a', 'b', 'c' => ['c1', 'c2'],]
-
-```
-
-* Add a blank line before return statements, unless the return is alone inside a statement-group (like an if statement);
-
-```php
-if ($item->isAvailable) {
-    return $item;
-}
-
-public function loadAvailableItems()
-{
-    $items = $query->('SELECT ...')->execute;
-
-    return $items;
-}
-
-```
-
-* Use braces to indicate control structure body regardless of the number of statements it contains;
-
-* Define one class per file - this does not apply to private helper classes that are not intended to be instantiated from the outside and thus are not concerned by the PSR-0 standard;
-
-* Declare class properties before methods;
-
-* Declare public methods first, then protected ones and finally private ones. The exceptions to this rule are the class constructor and the setUp and tearDown methods of PHPUnit tests, which should always be the first methods to increase readability;
-
-* Use parentheses when instantiating classes regardless of the number of arguments the constructor has;
-
-* Custom exception SHOULD NOT BE created if the purpose can be fulfilled by already available exceptions. (for reference: list of [Symfony Exceptions](http://www.forouzani.com/list-of-all-symfony2-exceptions-symfony.html))
-
-* Exception message strings SHOULD BE concatenated using sprintf.
-
-```php
-
-$e = new \Exception(sprintf("Can't find item %s with quantity %d", $itemNumber, $itemQuantity));
-
-```
-
-
-## Class
-
-* Class names MUST be declared in [`StudlyCaps`](http://en.wikipedia.org/wiki/Studly_caps)
-```php
-
-class Foo 
-{
-
-}
-
-class FooBar 
-{
-
-}
-
-class FooBarWhatever 
-{
-
-}
-```
-
-
-* Class constants MUST be declared in all upper case with underscore separators
-
-```php
-
-const DEFAULT_LANGUAGE   = en;
-const STATUS_UNAVAILABLE = 3;
-
-```
-
-* Opening braces for classes MUST go on the next line, and closing braces MUST go on the next line after the body.
-
-### Namespace
-
-* When present, there MUST be one blank line after the namespace declaration.
-
-* When present, all use declarations MUST go after the namespace declaration.
-
-* There MUST be one use keyword per declaration.
-
-* There MUST be one blank line after the use block.
-
-* Namespaces and classes MUST follow an ["autoloading" PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
-
-* Fully qualified class names MUST be used for classes that don't belong to any namespace, no need for `use` statements (f.e. \DateTime)
-
-```php
-
-$e = new \Exception('a bad thing just happened');
-
-$date = new \DateTime();
-
-```
-
-### Methods
-
-* Method names MUST be declared in [`camelCase`](http://en.wikipedia.org/wiki/CamelCase)
-
-```php
-
-public function testItShouldReturnAnItemCollection() 
-{
-
-}
-
-public function isAvailable()
-{
-
-}
-```
-
-* Opening braces for methods MUST go on the next line, and closing braces MUST go on the next line after the body.
-
-* Visibility MUST be declared on all methods.
-
-* Method names MUST NOT be prefixed with a single underscore to indicate protected or private visibility.
-
-* Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis.
-
-* In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma.
-
-* Method arguments with default values MUST go at the end of the argument list.
-
-* Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.
-
-* Chain calls on newline (`->`) SHOULD be aligned at least at the same level or in the most readable way:
-
-    ``` php
-    $someLongVarName = $object->longMethodNameWithSomeArguments($argumentOne, $argumentTwo, $argumentThree)
-                              ->fooMethod($fooArgument)
-                              ->barMethod($barArgument);
-
-    $result = $connection->beginTransaction()
-                            ->query("SELECT * FROM foo_table LOCK")
-			                ->query("UPDATE foo_table SET bla=bla")
-			             ->commit();
-    ```
-
-## Variables
-
-* Variables names MUST be declared in [`camelCase`](http://en.wikipedia.org/wiki/CamelCase)
-
-```php
-
-$isAvailable = true;
-$totalUsers  = 10;
-
-```
-
-* Variables declared on multiple lines MUST be aligned based on the longer variable name, that assignments MUST NOT be aligned together 
-if they have a blank line in between
-
-``` php
-
-$bar              = 'bar';
-$foo              = true;
-$veryLongVariable = 1;
-
-$veryLongVariableNames1 = 50;
-$veryLongVariableNames2 = 100;
-```
-
-## Array
-
-* Arrays SHOULD be declared with short PHP syntax.
-``` php
-
-$array = [1, 2, 'foo' => 'bar',]
-
-```
-
-* The last array argument should end with a comma
-
-* Long nested array MUST follow this format, indenting one tab:
-``` php
-
-$array = [
-	'first',
-	'second',
-	'third' => [
-		'nested' => [
-			'deepNested',
-		],
-	],
-]
-
-```
-
+We follow the [PSR-2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+In order to automate the formatting process we use the [PHP cs-fixer](http://cs.sensiolabs.org/) with level "symfony" that contains (other than the PSR-2 standard):
+
+- concatenation should be used without spaces
+- operator => should not be arounded by multi-line whitespaces
+- no duplicated semicolons
+- a return statement wishing to return nothing should be simply "return"
+- no extra empty lines
+- include and file path should be divided with a single space. File path should not be placed under brackets
+- PHP multi-line arrays should have a trailing comma
+- the namespace declaration line shouldn't contain leading whitespace
+- all instances created with new keyword must be followed by braces
+- operators should be arounded by at least one space
+- all items of the @param phpdoc tags must be aligned vertically
+- an empty line feed should precede a return statement
+- PHP single-line arrays should not have trailing comma.
+- single-line whitespace before closing semicolon are prohibited
+- a single space should be between cast and variable
+- unused use statements must be removed
+
+For more informations check the [Symfony coding standard](http://symfony.com/doc/current/contributing/code/standards.html)
+Other than PSR-2 and the symfony level fixers we follow these conventions:
+
+- align double arrow symbols in consecutive lines
+- align consecutive equals
+- concatenation should be used with at least one whitespace around
+- ordering use statements
+- PHP array's should use the PHP 5.4 short-syntax
 
 ## Logger
 
